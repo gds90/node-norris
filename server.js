@@ -15,17 +15,16 @@ const server = http.createServer((req, res) => {
         res.end();
     }
 
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    getRandomJoke();
-    res.write('<h1>Lista delle battute di Chuck Norris</h1>');
-    res.write('<ul>');
-    jokes.forEach(joke => {
-        res.write(`<li>${joke}</li>
+    getRandomJoke(() => {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.write('<h1>Chuck Norris says:</h1>');
+        res.write('<ul>');
+        res.write(`<li>${jokes[jokes.length - 1]}</li>
         <br>
         `);
+        res.write('</ul>');
+        res.end();
     });
-    res.write('</ul>');
-    res.end();
 });
 
 // Ascolto del server
