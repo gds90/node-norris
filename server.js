@@ -9,8 +9,15 @@ const host = process.env.HOST || "localhost";
 
 // Richiesta al server
 const server = http.createServer((req, res) => {
+    // Gestione chiamata favicon
+    if (req.url === '/favicon.ico') {
+        res.writeHead(404);
+        res.end();
+    }
+
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.write('<h1>Lista dei Jokes</h1>');
+    getRandomJoke();
+    res.write('<h1>Lista delle battute di Chuck Norris</h1>');
     res.write('<ul>');
     jokes.forEach(joke => {
         res.write(`<li>${joke}</li>
@@ -24,5 +31,4 @@ const server = http.createServer((req, res) => {
 // Ascolto del server
 server.listen(port, host, () => {
     console.log(`Server avviato su http://${host}:${port}`);
-    getRandomJoke();
 });
