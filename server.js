@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+// Require
 const http = require("http");
 const fs = require('fs');
 const path = require('path');
@@ -23,14 +24,22 @@ try {
 
 // Funzione per scrivere una battuta sul file JSon
 const writeJoke = (joke) => {
-    jokes.push(joke);
+    // Controllo se la battuta è già presente nell'array Jokes
+    if (jokes.includes(joke)) {
+        // Se già presente
+        console.log("Battuta già presente, procedo a caricarne un'altra");
+        getRandomJoke();
+    } else {
+        // Se non è presente la inserisco nell'array Jokes
+        jokes.push(joke);
 
-    fs.writeFile(filePath, JSON.stringify(jokes),
-        function (err) {
-            if (err) throw err;
-            console.log("Battuta salvata!");
-        }
-    );
+        fs.writeFile(filePath, JSON.stringify(jokes),
+            function (err) {
+                if (err) throw err;
+                console.log("Battuta salvata!");
+            }
+        );
+    }
 };
 
 // Funzione per recuperare una battuta random dall'API e aggiungerla al file JSon
